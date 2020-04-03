@@ -29,6 +29,7 @@ public class KafkaStatus extends Status {
     private static final long serialVersionUID = 1L;
 
     private List<ListenerStatus> listeners;
+    private String caCertificateSecret;
 
     @Description("Addresses of the internal and external listeners")
     public List<ListenerStatus> getListeners() {
@@ -37,5 +38,14 @@ public class KafkaStatus extends Status {
 
     public void setListeners(List<ListenerStatus> listeners) {
         this.listeners = listeners;
+    }
+
+    @Description("The name of `Secret` where the Cluster CA public key are stored")
+    public String getCaCertificateSecret() {
+        return caCertificateSecret;
+    }
+
+    public void setCaCertificateSecret(String caCertificateSecret) {
+        this.caCertificateSecret = caCertificateSecret;
     }
 }

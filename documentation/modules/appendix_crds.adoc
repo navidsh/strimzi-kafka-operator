@@ -1452,13 +1452,15 @@ Used in: xref:type-Kafka-{context}[`Kafka`]
 
 [options="header"]
 |====
-|Property                   |Description
-|conditions          1.2+<.<|List of status conditions.
+|Property                    |Description
+|conditions           1.2+<.<|List of status conditions.
 |xref:type-Condition-{context}[`Condition`] array
-|observedGeneration  1.2+<.<|The generation of the CRD that was last reconciled by the operator.
+|observedGeneration   1.2+<.<|The generation of the CRD that was last reconciled by the operator.
 |integer
-|listeners           1.2+<.<|Addresses of the internal and external listeners.
+|listeners            1.2+<.<|Addresses of the internal and external listeners.
 |xref:type-ListenerStatus-{context}[`ListenerStatus`] array
+|caCertificateSecret  1.2+<.<|The name of `Secret` where the Cluster CA public key are stored.
+|string
 |====
 
 [id='type-Condition-{context}']

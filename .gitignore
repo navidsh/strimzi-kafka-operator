@@ -1,5 +1,6 @@
 # Maven build targets
 **/target/*
+**/bin/*
 
 # Maven release files
 *.releaseBackup

@@ -252,6 +252,7 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator<KubernetesCl
         reconcileState.initialStatus()
                 .compose(state -> state.reconcileCas(this::dateSupplier))
                 .compose(state -> state.clusterOperatorSecret(this::dateSupplier))
+                .compose(state -> state.kafkaCaCertificateSecretToStatus())
                 // Roll everything if a new CA is added to the trust store.
                 .compose(state -> state.rollingUpdateForNewCaKey())
                 .compose(state -> state.getZookeeperDescription())
@@ -3183,6 +3184,12 @@ public class KafkaAssemblyOperator extends AbstractAssemblyOperator<KubernetesCl
 
             return withVoid(secretOperations.reconcile(namespace, ClusterOperator.secretName(name),
                     secret));
+        }
+
+        Future<ReconciliationState> kafkaCaCertificateSecretToStatus() {
+            String clusterCaCertName = AbstractModel.clusterCaCertSecretName(name);
+            kafkaStatus.setCaCertificateSecret(clusterCaCertName);
+            return Future.succeededFuture(this);
         }
 
         private Storage getOldStorage(StatefulSet sts)  {

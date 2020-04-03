@@ -5097,4 +5097,8 @@ spec:
                       the identity of the server when connecting to the given listener.
                       Set only for `tls` and `external` listeners.
               description: Addresses of the internal and external listeners.
+            caCertificateSecret:
+              type: string
+              description: The name of `Secret` where the Cluster CA public key are
+                stored.
           description: The status of the Kafka and ZooKeeper clusters, and Topic Operator.

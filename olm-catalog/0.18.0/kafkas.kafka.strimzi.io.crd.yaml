@@ -3794,3 +3794,5 @@ spec:
                     type: array
                     items:
                       type: string
+            caCertificateSecret:
+              type: string

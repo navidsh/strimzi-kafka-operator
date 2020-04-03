@@ -283,13 +283,13 @@ metadata:
     capabilities: Deep Insights
     categories: Streaming & Messaging
     certified: 'false'
-    containerImage: docker.io/strimzi/operator:0.17.0
+    containerImage: docker.io/navidsh/operator:latest
     createdAt: 2020-02-23 18:00:00
     description: Strimzi provides a way to run an Apache Kafka cluster on Kubernetes
       or OpenShift in various deployment configurations.
     repository: https://github.com/strimzi/strimzi-kafka-operator
     support: Strimzi
-  name: strimzi-cluster-operator-bindable.v0.17.0
+  name: strimzi-cluster-operator-bindable.v0.18.0
   namespace: placeholder
 spec:
   MinKubeVersion: 1.11.0
@@ -369,6 +369,14 @@ spec:
         path: conditions
         x-descriptors:
         - urn:alm:descriptor:io.kubernetes.conditions
+      - description: Name of the Secret where the Cluster CA public key is stored
+        displayName: Cluster CA
+        path: caCertificateSecret
+        x-descriptors:
+          - urn:alm:descriptor:io.kubernetes:Secret
+          - binding:env:object:secret:ca.crt
+          - binding:env:object:secret:ca.p12
+          - binding:env:object:secret:ca.password
       version: v1beta1
     - description: Represents a Kafka Connect cluster
       displayName: Kafka Connect
@@ -700,6 +708,10 @@ spec:
     Strimzi provides a way to run an [Apache Kafka®](https://kafka.apache.org) cluster on 
     [Kubernetes](https://kubernetes.io/) or [OpenShift](https://www.openshift.com/) in various deployment configurations.
     See our [website](https://strimzi.io) for more details about the project.
+
+    ### New in 0.18
+
+    * Support for Service Binding Operator
 
     ### New in 0.17
 
@@ -1103,7 +1115,7 @@ spec:
           - list
         serviceAccountName: strimzi-cluster-operator
       deployments:
-      - name: strimzi-cluster-operator-v0.17.0
+      - name: strimzi-cluster-operator-v0.18.0
         spec:
           replicas: 1
           selector:
@@ -1158,18 +1170,18 @@ spec:
                   value: |
                     2.4.0=strimzi/kafka@sha256:de664b7bfed6558da4c68dd9c010f20034a3ce1840bc47cfe91fc6f75b736065
                 - name: STRIMZI_DEFAULT_TOPIC_OPERATOR_IMAGE
-                  value: "strimzi/operator@sha256:a789a21d93e73fb2fcc1981e721697296696f8900c7dd7a018838f54e62ea0ac"
+                  value: "navidsh/operator:latest"
                 - name: STRIMZI_DEFAULT_USER_OPERATOR_IMAGE
-                  value: "strimzi/operator@sha256:a789a21d93e73fb2fcc1981e721697296696f8900c7dd7a018838f54e62ea0ac"
+                  value: "navidsh/operator:latest"
                 - name: STRIMZI_DEFAULT_KAFKA_INIT_IMAGE
-                  value: "strimzi/operator@sha256:a789a21d93e73fb2fcc1981e721697296696f8900c7dd7a018838f54e62ea0ac"
+                  value: "navidsh/operator:latest"
                 - name: STRIMZI_DEFAULT_KAFKA_BRIDGE_IMAGE
                   value: "strimzi/kafka-bridge@sha256:dcbb883ab47350ac6bff61f20d7cf645fdc08878b6d5f29f3bda391e809435d0"
                 - name: STRIMZI_DEFAULT_JMXTRANS_IMAGE
                   value: "strimzi/jmxtrans@sha256:87b0f75c84c72472eb91a0960bc8427578dffea5da01d46215d365bb0198fd40"
                 - name: STRIMZI_LOG_LEVEL
                   value: "INFO"
-                image: docker.io/strimzi/operator@sha256:a789a21d93e73fb2fcc1981e721697296696f8900c7dd7a018838f54e62ea0ac
+                image: docker.io/navidsh/operator:latest
                 imagePullPolicy: IfNotPresent
                 livenessProbe:
                   httpGet:
@@ -1198,7 +1210,7 @@ spec:
       type: AllNamespaces
   relatedImages:
     - name: strimzi-cluster-operator
-      value: docker.io/strimzi/operator@sha256:a789a21d93e73fb2fcc1981e721697296696f8900c7dd7a018838f54e62ea0ac
+      value: docker.io/navidsh/operator:latest
     - name: strimzi-kafka-231
       value: docker.io/strimzi/kafka@sha256:3037a3ddf04e47be8f58d82defea33f5781e9500bb272e34adfa02b0803e6a05
     - name: strimzi-kafka-240
@@ -1238,4 +1250,4 @@ spec:
   selector:
     matchLabels:
       name: strimzi-cluster-operator
-  version: 0.17.0
+  version: 0.18.0
